@@ -1,9 +1,7 @@
 # intron-retention-scripts
 
-The present folder contains scripts from the manuscript entitled 'Tracking pre-mRNA maturation across subcellular compartments identifies developmental gene regulation through intron retention and nuclear anchoring'
+The scripts used in the manuscript entitled 'Tracking pre-mRNA maturation across subcellular compartments identifies developmental gene regulation through intron retention and nuclear anchoring' are included in the present folders for the purpose of reproducibility and transparency of the results from the manuscript.
 
-These scripts are meant to provide additional transparency on the code underlying the results from the manuscript. 
+The scripts are broken down by the order of analysis. 
 
-Scripts are broken down by the order of analysis. 
-
-Note however that due to the computational nature of the analysis performed, the scripts may require high memory to be run, or parallelization through a cluster. In addition, some parts of the analysis have been rewritten to improve clarity of the pipeline. In doing so, some bugs may have escaped our vigilance. Thus the code is provided without warranty. If you try to rerun these analyses and encounter any problem, please report it to the author (zcpan1016@gmail.com).
+The code is provided without a warranty. Codes from parts of the analysis are rewritten to make them easy to understand thus may cause errors when running them. If you encounter any problems or questions, please report them to the author (zcpan1016@gmail.com).
