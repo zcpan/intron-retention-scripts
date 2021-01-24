@@ -1,7 +1,6 @@
 library(ggplot2)
 library(Rtsne)
-data <- read.table('tsne.input.txt', header=TRUE, sep = '\t')
-data <- head(data,30)
+data <- read.table('tsne.input_A_D.txt', header=TRUE, sep = '\t')
 data.matrix <- as.matrix(data[,2:(dim(data)[2] - 2)])
 tsne <- Rtsne(data.matrix, check_duplicates = FALSE, pca = TRUE, 
               perplexity=5, theta=0.5, dims=2)
