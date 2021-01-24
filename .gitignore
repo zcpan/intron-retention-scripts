@@ -127,3 +127,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+ptc_analysis_3/mm10.fa
+ptc_analysis_3/Mus_musculus.GRCm38.91.chr.gtf
