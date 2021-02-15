@@ -143,7 +143,7 @@ def make_train_data():
     # get feature annotation files
     fp = open(DATA_DIR + 'Intron.feature.annotation')
     header = fp.readline().strip()
-    feature_start_index = header.split('\t').index('LogLen.C1')
+    feature_start_index = header.split('\t').index('LogLen.E1')
     dict_intron_feature = {}
     for line in fp:
         sp = line.strip().split('\t')
