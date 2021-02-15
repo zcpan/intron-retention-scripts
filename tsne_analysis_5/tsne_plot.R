@@ -4,6 +4,7 @@ data <- read.table('tsne.input_A_D.txt', header=TRUE, sep = '\t')
 ## obtain data matrix
 data.matrix <- as.matrix(data[,2:(dim(data)[2] - 2)])
 ## perform T-SNE analysis
+set.seed(1890)
 tsne <- Rtsne(data.matrix, check_duplicates = FALSE, pca = TRUE, 
               perplexity=5, theta=0.5, dims=2)
 embedding <- as.data.frame(tsne$Y)
@@ -25,4 +26,4 @@ p <- ggplot(embedding, aes(x=V1, y=V2, color=Category, label = Class)) + geom_po
   scale_x_continuous(expand = c(0, 0),limits = c(-150,230)) + 
   scale_color_manual(values=c("#F8766D", "#619CFF", "#56B4E9")) + 
   xlab('t-SNE 1') + ylab('t-SNE 2')
-print(p)
+ggsave(p, file="tsne_plot.pdf", width=8, height=5.2)
