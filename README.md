@@ -1,4 +1,4 @@
-# intron-retention-scripts
+# intron retention
 
 The scripts used in the manuscript entitled 'Tracking pre-mRNA maturation across subcellular compartments identifies developmental gene regulation through intron retention and nuclear anchoring' are included in the present folders for the purpose of reproducibility and transparency of the results from the manuscript.
 
