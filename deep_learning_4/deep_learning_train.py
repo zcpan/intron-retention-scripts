@@ -168,96 +168,6 @@ def make_train_data():
     h5_data.create_dataset('intron_value', data = intron_value_array)
     h5_data.close()
 
-def tmp():
-    random.seed(random_seed)
-
-    for index, intron_id in enumerate(intron_id_list):
-        dict_intron_feature[intron_id] = feature_matrix[index]
-    [random.shuffle(intron_id_list) for x in xrange(100)]
-    train_list, test_list = split_by_fold(intron_id_list, fold_id, 5)
-    X_train, y_train, sample_weight = [], [], []
-    X_test, y_test = [], []
-    intron_test_events = []
-
-    for intron in train_list:
-        X_train.append(dict_intron_feature[intron])
-        y_train.append(dict_intron_id_value[intron])
-
-    for intron in test_list:
-        X_test.append(dict_intron_feature[intron])
-        y_test.append(dict_intron_id_value[intron])
-        intron_test_events.append(intron)
-
-    X_train, y_train = np.array(X_train), np.array(y_train)
-    X_test, y_test = np.array(X_test), np.array(y_test)
-
-    return X_train, y_train, X_test, y_test, intron_test_events
-
-    X = np.load('X.npy')
-    y = np.load('y.npy')
-    instances = range(0, X.shape[0]) # get sample index
-    [random.shuffle(instances) for x in range(7)] # random shuffle instances 7 times
-    folds_num = 5 # split the data into 5 folds
-    train_list, test_list = split_by_fold(instances, fold_id, folds_num)
-    X_train, y_train = [], []
-    X_test, y_test = [], []
-    for train_index in train_list:
-        X_train.append(X[train_index])
-        y_train.append(y[train_index])
-    for test_index in test_list:
-        X_test.append(X[test_index])
-        y_test.append(y[test_index])
-    return np.array(X_train), np.array(y_train), np.array(X_test), np.array(y_test)
-
-def get_auc(y_pred, y_test, v1, v2):
-    acc, count = 0.0, 0.0
-    y_true, y_scores = [], []
-    for _pred, _test in zip(y_pred, y_test):
-        for x in xrange(3):
-            if np.isnan(_test[3 * x]):
-                continue
-            argmax_test = np.argmax(_test[3 * x: 3 * x + 3])
-            argmax_pred = np.argmax(_pred[3 * x: 3 * x + 3])
-            _pred_list = _pred[3 * x : 3 * x + 3]
-            if argmax_test == argmax_pred:
-                acc += 1
-            count += 1
-            if _test[3 * x + v2] == 1:
-                y_true.append(1)
-                y_scores.append(_pred[3 * x + v2] / (_pred[3 * x + v2] + _pred[3 * x + v1]))
-            elif _test[3 * x + v1] == 1:
-                y_true.append(0)
-                y_scores.append(_pred[3 * x + v2] / (_pred[3 * x + v2] + _pred[3 * x + v1]))
-    auc = roc_auc_score(y_true, y_scores)
-    return auc
-
-def tmp2():
-    random_seed = 1337
-    fold_id = 1
-    epoch = 200
-    batch_size = 2000   
-
-    X_train, y_train, X_test, y_test = make_train_data(random_seed, fold_id)
-    FEATURE_NUM = X_train.shape[1]
-
-    sgd = optimizers.SGD(lr=0.01, decay=1e-7, momentum=0.9, nesterov=True)
-    model = create_model(12, FEATURE_NUM)
-    model.compile(loss=masked_cross_entropy_loss, optimizer=sgd)
-    model.fit(X_train, y_train, batch_size=batch_size, epochs=epoch, shuffle=True)
-    model_json_file = open('model.{}'.format(fold_id) + '.json', 'w')
-    model_json_file.write(model.to_json())
-    model_json_file.close()
-    model.save_weights('model.{}'.format(fold_id) + '.weight.hd5')  
-
-    y_pred = model.predict(X_test)  
-
-    for i in range(0, 4):
-        for j in range(0, 4):
-            if i >= j:
-                continue
-            auc = round(get_auc(y_pred, y_test, i, j), 2)
-            print 'Cluster{} vs. Cluster{} (AUC = {})'.format(i, j, auc)
-
 def split_train_data(random_seed, fold_id):
     random.seed(random_seed)
     h5_data = h5py.File(CURRENT_DIR + 'train.data.hd5', 'r')
@@ -355,15 +265,20 @@ def evaluate_performance():
     fw.close()
 
 def main():
+    print 'making training data matrix'
     make_train_data()
     random_seed = 1337
     # split the train data into five folds. Iteratively, four as training, the rest as testing.
     for fold_id in [1, 2, 3, 4, 5]:
+        print '...getting data for fold{}'.format(fold_id)
         split_train_data(random_seed, fold_id)
         # train data
+        print '...train fold{}'.format(fold_id)
         deep_learning_train(random_seed, fold_id)
         # test data
+        print '...pred fold{}'.format(fold_id)
         deep_learning_pred(fold_id)
+    print 'evaluate the prediction from deep learning'
     evaluate_performance()
 
 if __name__=="__main__":
