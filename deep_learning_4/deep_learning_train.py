@@ -276,7 +276,7 @@ def main():
         print '...train fold{}'.format(fold_id)
         deep_learning_train(random_seed, fold_id)
         # test data
-        print '...pred fold{}'.format(fold_id)
+        print '...predict fold{}'.format(fold_id)
         deep_learning_pred(fold_id)
     print 'evaluate the prediction from deep learning'
     evaluate_performance()
