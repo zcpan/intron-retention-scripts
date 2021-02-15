@@ -1,3 +1,5 @@
+Please unzip mm10.fa.gz first in data folder.
+
 The deep learning part is included in the code. 
 The code has three functions listed below:
 1. generate training data
