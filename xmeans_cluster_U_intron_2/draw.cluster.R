@@ -78,6 +78,4 @@ p <- ggplot(data.combine, aes(x = Cluster, y = FI, fill = Cell_Compartment)) + g
   theme(legend.position = "right", legend.title = element_blank(), strip.text = element_text(size=15), legend.direction = "vertical") + scale_y_continuous(expand = c(0, 0), limits = c(0, 1)) +
   xlab('Cluster') + ylab('PI value')
 
-ggsave('cluster.png', width=10, height=5)
-
-
+ggsave('cluster.png', width=10, height=5, dpi = 300)

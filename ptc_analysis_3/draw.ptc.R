@@ -71,4 +71,4 @@ p <- ggplot(data, aes(x = category, y = proportion, fill  = type)) + geom_bar(st
   theme(axis.title.x = element_blank(),strip.background = element_blank(), panel.grid.major.x = element_blank(), plot.title = element_text(hjust = 0.5), legend.title = element_blank(), strip.text = element_text(size=15), text = element_text(size=15), panel.spacing = unit(2, 'lines')) +
   ylab('Proportion') + scale_y_continuous(expand = c(0, 0))
 print(p)
-ggsave(p, file="PTC_figure.pdf", width=6, height=3)
+ggsave(p, file="PTC_figure.png", width=6, height=3, dpi = 300)
