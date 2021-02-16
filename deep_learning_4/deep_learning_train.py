@@ -267,7 +267,7 @@ def evaluate_performance():
 def main():
     print 'making training data matrix'
     make_train_data()
-    random_seed = 1337
+    random_seed = 1037
     # split the train data into five folds. Iteratively, four as training, the rest as testing.
     for fold_id in [1, 2, 3, 4, 5]:
         print '...getting data for fold{}'.format(fold_id)
