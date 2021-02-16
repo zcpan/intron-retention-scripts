@@ -76,4 +76,4 @@ p <- ggplot(data, aes(x=FPR, y=TPR, color=Category, group=Category)) + geom_line
   ylab('True positive rate') +
   xlab('False positive rate') + theme(aspect.ratio=1) + ggtitle('Performance')
 print(p)
-ggsave(p, file="./results/performance.pdf", width=8, height=5.2)
+ggsave(p, file="./results/performance.png", width=8, height=5.2, dpi = 300)
