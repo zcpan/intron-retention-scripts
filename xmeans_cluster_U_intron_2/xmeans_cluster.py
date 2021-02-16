@@ -131,7 +131,12 @@ def get_intron_cluster(Chr_index, Nuc_index, Cyto_index, cell_type, experiment, 
         cluster_name_list.append(cluster_name[index] + '\\n ' + str(len(cluster)))
     fw.close()
 
-generate_black_list()
-for index, sample_index in enumerate(POLYA_SAMPLE_INDEX):
-    Chr_index, Nuc_index, Cyto_index = sample_index
-    get_intron_cluster(Chr_index, Nuc_index, Cyto_index, CELL_TYPE[index], 'polyA') # get intron clusters by using x-means
+def main():
+    generate_black_list()
+    for index, sample_index in enumerate(POLYA_SAMPLE_INDEX):
+        Chr_index, Nuc_index, Cyto_index = sample_index
+        # get intron clusters by using x-means
+        get_intron_cluster(Chr_index, Nuc_index, Cyto_index, CELL_TYPE[index], 'polyA')
+
+if __name__=="__main__":
+    main()
